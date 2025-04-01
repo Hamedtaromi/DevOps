@@ -1,0 +1,99 @@
+HTTP/HTTPS
+NGINX
+  As a webserver
+  As a reverse proxy
+  As a loadbalancer
+BIND
+FileSharing
+  SAMBA
+  NFS
+  FTP
+LVM
+Firewall
+===========
+
+echo "- - -" > /sys/class/scsi_host/host2/scan
+1. pvcreate /dev/sdb1
+2. pvs
+2. pvdisplay
+2. vgcreate vg-01 /dev/sdb1
+3. vgs
+4. vgdisplay
+5. lvcreate -l 511 vg-01 --name lv-01
+5. mkfs.xfs /dev/vg-01/lv-01
+6. mount /dev/vg-01/lv-01 /DATA
+
+
+How to extend : 
+----------------
+
+pvcreate /dev/sdb2
+vgextend vg-01 /dev/sdb2
+lvextend -l +127 /dev/vg-01/lv-01
+xfs_growfs /dev/vg-01/lv-01
+
+
+
+Firewall
+-------------
+IPTABLES ----> FIREWALLD -----> NFTABLES
+
+
+
+
+iptables -nL
+iptables -F
+
+
+
+ALL ---> SERVER ----> SSH 22 --> ACCEPT
+ALL ---> SERVER ----> PING ----> ACCEPT
+
+
+
+SERVER ---> ALL ---> PING  ----> DROP
+SERVER ---> ALL ---> SSH 22 ---> DROP
+
+
+iptables -A INPUT -p tcp --dport 22 -j ACCEPT -m comment --comment "SSH Access"
+iptables -A INPUT -j DROP
+
+iptables -A OUTPUT -p tcp --sport 22 -j ACCEPT
+iptables -A OUTPUT -j DROP
+
+
+
+
+iptables -A INPUT -p icmp --icmp-type echo-request -j ACCEPT
+iptables -A INPUT -p tcp --dport 22 -j ACCEPT
+
+
+
+
+ yum -y install iptables-services
+
+iptables-save > /root/iptables.rules
+iptables-restore-translate -f /root/iptables.rules > /root/nftables.nft
+nft -f /root/nftables.nft
+nft list ruleset
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

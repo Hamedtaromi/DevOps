@@ -1,0 +1,14 @@
+
+
+
+yum -y install mysql
+yum -y install mysql-server
+
+
+
+
+
+
+root@%
+root@localhost
+root@192.168.10.100

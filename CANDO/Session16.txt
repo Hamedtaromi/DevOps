@@ -1,0 +1,97 @@
+-Ansible Vault
+-Async/Poll
+-Ansible for windows
+-Task Delegation
+====================
+
+
+ansible-vault create vault_example_01.yaml
+ansible-vault edit vault_example_01.yaml
+ansible-vault view vault_example_01.yaml
+ansible-vault decrypt vault_example_01.yaml
+ansible-vault encrypt --vault-id app@prompt vault_example_02.yaml
+ansible-vault encrypt --vault-id app@pass vault_example_03.yaml
+ansible-vault rekey vault_example_02.yaml
+ansible-vault encrypt_string --ask-vault-password --name 'password' '123'
+ansible-playbook --vault-id app@prompt --vault-id app2@prompt vault_example_03.yaml
+ansible-playboo --ask-vault-pass vault_example_03.yaml
+
+echo '$ANSIBLE_VAULT;1.1;AES256
+36623230663536343362333835613265353835666134363037393435373661393663346139376663
+3739343263346364386636613635343337626636363066630a656537623637306564303338366164
+37333537363031336634323461623666356639663639346639303862626430316161356538303265
+3130613839656665650a323363313162643535373561373736646332373830323730333165663565
+3734' | ansible-vault decrypt -
+
+ansible-vault decrypt pass
+
+
+Async/Poll
+========
+  hosts: dbservers
+  gather_facts: no
+  tasks:
+   - name: task number 1
+     command: /bin/sleep 10
+     async: 45
+     poll: 0
+     register: result1
+
+
+   - name: check async status
+     async_status:
+      jid: "{{ result1.ansible_job_id }}"
+     register: job_result
+     until: job_result.finished
+     retries: 10
+
+
+
+Ansible for windows
+-------------------
+pip3.6 install pywinrm
+
+
+ansible_inventory
+---------------------
+   vars:
+    ansible_user: ansible
+    ansible_password: Aa111111
+    ansible_port: 5986
+    ansible_connection: winrm
+    ansible_winrm_server_cert_validation: ignore
+
+
+- name: open firewall port
+  hosts: windowsservers
+  tasks:
+   - name: Firewall rule to allow SMTP on TCP port 25
+     win_firewall_rule:
+      name: SMTP
+      localport: 25
+      action: allow
+      direction: in
+      protocol: tcp
+      state: present
+      enabled: yes
+
+Task Delegation
+===============
+
+
+- name: task delegation sample playbook
+  hosts: prod
+  tasks:
+   - name: set host file
+     shell: echo {{ ansible_default_ipv4.address }} {{ ansible_hostname }} >> /etc/hosts
+     delegate_to: "{{ item }}"
+     with_items: "{{ play_hosts }}"
+
+
+
+
+
+
+
+
+

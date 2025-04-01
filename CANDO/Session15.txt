@@ -1,0 +1,124 @@
+-ansible inventory
+-local facts
+loop
+===================
+
+
+CAN01VL01---> CAN01VL[01:99]
+
+
+all:
+ children:
+  dbservers:
+   hosts:
+    DB-Server
+  webservers:
+   hosts:
+    WEB-Server
+  prod:
+   children:
+    webservers:
+    dbservers:
+ 
+
+local facts
+-------------
+`date=$(date)
+
+#!/bin/bash
+
+echo {\""date"\":\"$(date)\"}
+
+
+
+{"date":"Thu Nov  2 08:57:34 EDT 2023"}
+
+getnginx.fact
+------------
+#!/bin/bash
+
+echo {\""pid"\":\""$(ps -aux | grep -v grep | grep root | grep -w nginx | awk '{print $2}')\""}
+
+playbook
+-------------
+- name: kill nginx process
+  hosts: dbservers
+  tasks:
+    - name: create local facts directory
+      file:
+       path: /etc/ansible/facts.d/
+       state: directory
+
+    - name: copy fact file
+      copy:
+       src: fact.d/getnginx.fact
+       dest: /etc/ansible/facts.d/getnginx.fact
+       force: true
+       owner: root
+       group: root
+       mode: u+rwx,g+rwx,o+rwx
+
+    - name: check local facts
+      setup:
+       filter: ansible_local
+
+
+    - name: check variable
+      debug:
+       msg: server nginx pid is {{ ansible_local.getnginx.pid }}
+
+    - name: kill nginx process
+      command: kill -9 {{ ansible_local.getnginx.pid }}
+
+
+ansible loop
+---------------
+with_item
+with_dict
+with_nested
+
+Sample1 : 
+==========
+- name: creating multiple users
+  hosts: webservers
+  tasks:
+   - name: add some users
+     user:
+      name: "{{ item }}"
+     with_items:
+      - ali
+      - hasan
+      - gholi
+
+
+with_dict:
+===========
+- name: creating multiple users
+  hosts: webservers
+  tasks:
+   - name: add some users
+     user:
+      name: "{{ item.key }}"
+      comment: "{{ item.value.comment }}"
+      password: "{{ item.value.password }}"
+     with_dict:
+      asghar:
+       comment: Administrator
+       password: Aa11111123asd
+      mohammad:
+       comment: read only user
+       password: Aa123123dasd
+
+
+
+with_nested
+
+
+["A","B","C"]
+["D","E"]
+
+
+
+
+
+

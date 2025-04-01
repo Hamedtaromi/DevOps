@@ -1,0 +1,112 @@
+MYSQL
+Bash script (Shell Script)
+==========================
+mysql -u root -p 
+create database mydb;
+create user 'dbuser'@'%' identified by 'Aa111111';
+grant all on mydb.* to 'dbuser'@'%';
+
+
+
+show databases;
+
+select user,host from mysql.user;
+
+select customerName,phone from customers where phone = '7025551838';
+
+https://www.mysqltutorial.org/mysql-sample-database.aspx
+
+
+
+Shell Script:
+-------------
+
+Variables: 
+	1. Local --> Current Bash , Current Shell
+	2. Global -> Current Bash , All Shell
+
+
+printenv
+env
+set
+
+
+#! --> Shebang
+#!/bin/bash
+
+
+
+result=$[ ..... * ...... ]
+
+
+
+
+
+
+Logic Statement
+---------------
+if [ condition ] 
+then
+	Command
+fi
+
+
+if conditions:
+------------------
+N1 -eq N2         if [ 0 -eq 0 ]
+N1 -ge N2
+N1 -gt N2
+N1 -le N2
+N1 -lt N2
+N1 -ne N2
+
+Str1 == Str2	 if [ 0 == 0 ]
+Str1 != Str2     if [ amin  != ali ]
+
+-d file          if [ -d /etc/sysconfig ]
+-f file          if [ -f /etc/sysconfig/iptables ]
+-e file		 if [ -e /etc/sysconfig ]
+
+
+
+
+if [ condition1 ]  && [ condition2 ]
+then 
+
+.....
+
+elif [] 
+then
+
+
+else 
+
+..
+
+fi
+
+
+
+
+case
+-----
+
+case variable in 
+pattern1) command1;;
+pattern2) command2;;
+pattern3) command3;;
+*) default command;;
+esac
+
+
+
+
+
+
+
+
+
+
+
+
+

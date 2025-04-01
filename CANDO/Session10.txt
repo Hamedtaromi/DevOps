@@ -1,0 +1,60 @@
+Harbor
+Volume
+========
+
+
+How to install harbor: 
+------------------------
+https://goharbor.io/docs/2.0.0/install-config/
+
+
+registry_url/repo_name/image_name:tag
+reg.aradarpanet.ir/class/mynginx:v1.0.0
+
+
+https://manuals.gfi.com/en/kerio/connect/content/server-configuration/ssl-certificates/adding-trusted-root-certificates-to-the-server-1605.html
+
+
+Docker volume
+----------------
+Concepts : 
+
+https://docs.docker.com/storage/
+
+
+
+/var/lib/docker/ ---> Docker Area
+
+
+docker volume create myvol
+docker container run -d --name nginx -v myvol:/usr/share/nginx/html -p 80:80 nginx:latest
+
+
+docker container run -d --name webapp -v myvol:/usr/share/nginx/html -p 80:80 nginx:latest
+docker container run -d --name time-exporter -v myvol:/data --restart always alpine /bin/sh -c 'while true ;do echo $(date) > /data/index.html ; sleep 1;  done'
+docker container run -d --name webapp -v myvol:/usr/share/nginx/html:ro -p 80:80 nginx:latest
+docker volume prune
+
+
+Dangling Image :
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

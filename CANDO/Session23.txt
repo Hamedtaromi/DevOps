@@ -1,0 +1,97 @@
+
+
+
+version.txt ---> v2.4.0
+
+
+stages: build
+script:
+ - ........................... ---> VERSION=v2.4.0
+ - docker image build . -t reg.cando.com/voteapp/vote:$VERSION
+ - docker login ...
+ - docker image push ....reg.cando.com/voteapp/vote:$VERSION
+
+
+
+stage: deploy
+script:
+ - export VERSION
+ - docker compose up -d 
+
+
+
+
+
+docker-compose.yaml
+------------------
+version: '3.8'
+services:
+ vote:
+   container_name: vote
+   image: reg.cando.com/voteapp/vote:$VERSION
+
+
+====================
+#!/bin/bash
+
+read -p "please enter signal number ( 9 or 15 ) " SIG
+read -p "please enter process id (PID) " PID
+
+
+case $SIG in
+        9) kill -9 $PID;;
+        15) kill $PID;;
+        *) echo "wrong signal number";;
+esac
+
+
+
+loop
+-----------
+for variables in series ; 
+do	
+	command
+done
+
+
+while
+-------
+while [ condition ]
+do
+command
+done
+
+
+#!/bin/bash
+
+i=0
+
+while [ $i -le 100 ]
+do
+        sleep 1
+        echo $i
+        i=$[ $i + 1 ]
+done
+
+
+0:0
+0:1
+0:2
+.
+.
+0:59
+1:00
+1:01
+..
+1:59
+.
+
+
+docker swarm init
+docker swarm join-token worker
+
+
+
+
+docker stack deploy -c stack.yaml nginx
+

@@ -1,0 +1,91 @@
+Web Servers (NGINX)
+	Nginx as a Webserver
+	Nginx as a Reverse Proxy
+	Nginx as a LoadBalancer
+===============================
+
+
+yum -y install vim  bash-completion
+root
+P@ssw0rd
+
+http://repo.candocollege.local/
+systemctl disable --now firewalld
+hostnamectl set-hostname Zafarghandi-01
+systemctl restart NetworkManager
+
+OH-1-1 , OH-1-2 ---> 192.168.64.3 --> Reza Shahverdi
+OH-2-1 , OH-2-2 ---> 192.168.64.5 --> Sina Tavakolli
+OH-3-1 , OH-3-2 ---> 192.168.64.7 --> Hafez Heibati
+OH-4-1 , OH-4-2 ---> 192.168.64.9 --> Arsalan
+OH-5-1 , OH-5-2 ---> 192.168.64.11 -> Hasan Emami
+OH-6-1 , OH-6-2 ---> 192.168.64.13 -> Mehdi Eslami
+OH-7-1 , OH-7-2 ---> 192.168.64.15 -> Masoud Bayat
+OH-8-1 , OH-8-2 ---> 192.168.64.17 -> Ramtin Kharazmi
+OH-9-1 , OH-9-2 ---> 192.168.64.19 -> Hossein HashemZade
+OH-10-1 , OH-10-2 ---> 192.168.64.21 -> Hadi RehanFar
+OH-11-1 , OH-11-2 ---> 192.168.64.23 -> Ehsan Royanian
+OH-12-1 , OH-12-2 ---> 192.168.64.25 -> Farshid Foroghi
+OH-13-1 , OH-13-2 ---> 192.168.64.27 -> Lorestani
+OH-14-1 , OH-14-2 ---> 192.168.64.29 -> Faezi
+OH-15-1 , OH-15-2 ---> 192.168.64.31 -> Rasoul Sajjadian
+OH-16-1 , OH-16-2 ---> 192.168.64.33 -> Taha Tabar
+OH-17-1 , OH-17-2 ---> 192.168.64.35 -> Hossein Gholami
+OH-18-1 , OH-18-2 ---> 192.168.64.37 -> MohammadJavad Sar
+OH-19-1 , OH-19-2 ---> 192.168.64.39 -> Bahman Ghanbari
+OH-20-1 , OH-20-2 ---> 192.168.64.41 -> Kargar
+OH-21-1 , OH-21-2 ---> 192.168.64.43 -> Dehnavi
+OH-22-1 , OH-22-2 ---> 192.168.64.45 -> Akbari Mo'alem
+OH-23-1 , OH-23-2 ---> 192.168.64.47 -> Fasihi
+OH-24-1 , OH-24-2 ---> 192.168.64.49 -> Hamed Rasouli
+OH-25-1 , OH-25-2 ---> 192.168.64.51 -> Mohsen Jodat
+OH-26-1 , OH-26-2 ---> 192.168.64.53 -> Ebrahim Babaei
+OH-27-1 , OH-27-2 ---> 192.168.64.55 -> Hamze'i
+OH-28-1 , OH-28-2 ---> 192.168.64.57 -> Parsa
+OH-29-1 , OH-29-2 ---> 192.168.64.59 -> Jalili
+OH-30-1 , OH-30-2 ---> 192.168.64.61 -> Kosha Eslami
+OH-31-1 , OH-31-2 ---> 192.168.64.63 -> Doroze
+OH-32-1 , OH-32-2 ---> 192.168.64.65 -> ArabGari
+OH-33-1 , OH-33-2 ---> 192.168.64.67 -> GHaderi
+OH-34-1 , OH-34-2 ---> 192.168.64.69 -> Riazat
+OH-35-1 , OH-35-2 ---> 192.168.64.71 -> Asadi
+OH-36-1 , OH-36-2 ---> 192.168.64.73 -> Ahadi
+OH-37-1 , OH-37-2 ---> 192.168.64.75 -> Reghat
+
+
+------------------------------------
+
+JAVA --> Tomcat , Oracle WebLogic , Glassfish , Jbos , .... ---------> JVM(JRE)
+DOTNET > IIS                                                ---------> dotnet
+PHP ---> LAMP , LEMP 					     --------> php-fpm
+Node -->                                                     --------> nodejs , npm
+python > Gunicorn					     --------> python
+
+
+Nginx Performance Tunning
+--------------------------
+https://www.nginx.com/blog/tuning-nginx/
+
+
+/etc/nginx/nginx.conf
+/usr/share/nginx/html/
+
+
+
+how to generate certificate 
+----------------------------
+openssl genrsa -des3 -out server.key
+openssl rsa -in server.key -out private.key
+openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout private.key -out public.crt
+
+
+
+
+
+
+
+
+
+
+
+

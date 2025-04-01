@@ -1,0 +1,56 @@
+GIT
+=========
+
+
+
+yum -y install git
+
+git init
+git add index.html
+git config --global user.email "your_email"
+git commit -m "first commit"
+git diff HEAD
+git diff --staged
+git restore index.html
+git reset index.html
+
+git checkout -- index.html
+git checkout commit_id index.html
+git checkout commit_id
+
+git branch
+git branch develop
+git checkout develop
+git checkout master
+git merge develop
+
+
+
+Git Flow
+
+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
+
+
+git branch -M main
+git remote add origin https://...............
+git push -uf origin Main
+git pull 
+
+
+
+git tag 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

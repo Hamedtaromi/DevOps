@@ -1,0 +1,8 @@
+curl -sL https://rpm.nodesource.com/setup_18.x | sudo bash -
+
+
+
+
+registry_url/repo_name/image_name:tag
+
+reg.cando.com/project/vote:v1.1.1

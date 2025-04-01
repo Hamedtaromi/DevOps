@@ -1,0 +1,49 @@
+Ansible
+=================
+
+
+Inventory
+Module
+Task
+Playbook
+
+
+
+Ansible Installation: 
+-------------------------
+1. Python-virtualenv
+2. yum 
+
+
+yum -y install python3-virtualenv.noarch
+virtualenv-3.6 venv-01
+source bin/activate
+pip3.6 install ansible
+
+
+ansible.cfg
+-------------
+[defaults]
+inventory = hosts.yaml
+remote_user = root
+host_key_checking = False
+
+
+ansible-config view
+ansible-config list
+
+ssh-keygen
+ssh-copy-id root@192.168.64.2
+
+ansible all -m command -a uptime
+ansible all -m command -a 'yum list nginx'
+ansible all -m setup      ----------------------> Gathering Facts
+ansible all -m yum -a name=nginx
+
+ansible-playbook install_nginx.yaml --start-at-task "start nginx"
+
+
+
+robocopy
+
+glusterfs

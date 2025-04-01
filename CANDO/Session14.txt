@@ -1,0 +1,75 @@
+Variables
+Jinja2 (Templating)
+Register
+=================
+
+
+Notify/Handlers
+
+
+using variables: 
+------------------
+https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_variables.html
+
+
+
+Jinja2 (Templating)
+-------------------
+
+{{.........}} ---> Variables
+{% ........%} ---> Statement
+{# ........#} ---> Comment
+
+
+
+Register:
+------------
+- name: register example
+  hosts: ansible_clients
+  tasks:
+   - name: whoami task
+     command: whoami
+     register: myname
+
+
+   - name: show myname variable
+     debug:
+      msg: my username is {{ myname.stdout }}
+
+
+- name: register example
+  hosts: ansible_clients
+  vars_prompt:
+   - name: username
+   - name: password
+  tasks:
+
+   - name: show username variable
+     debug:
+      msg: your username is {{ username }}
+
+
+   - name: show password variable
+     debug:
+      msg: your username is {{ password }}
+
+
+when:
+----
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

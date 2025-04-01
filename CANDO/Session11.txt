@@ -1,0 +1,50 @@
+Docker Network
+	Container Networking Model (CNM)
+	Networking Firewall
+	Bridge network
+	Host network
+	none network
+	port management
+Scenario
+==============
+docker network create  mynet-01
+docker network create --subnet 172.21.0.0/24 mynet-02
+
+
+default bridg :
+userd defined bridge = custome bridge
+
+
+docker container run -d --name app5 --network  host busybox:latest sleep 10000000
+
+
+
+https://docs.docker.com/network/drivers/macvlan/ ??????
+
+
+
+docker container run -d --name app1 -p 80:80
+docker container run -d --name app2 -p 8080:80
+docker container run -d --name app3 -p 53:53
+docker contianer run -d --name app4 -p 53:53/udp
+
+
+
+
+docker container run -d --name db -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=postgres .....
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,47 @@
+Docker
+=========
+
+
+namespace: 
+
+ 1. mnt ( Mount Point )
+ 2. pid
+ 3. net
+ 4. user
+ 5. uts
+ 6. ipc 
+
+how to install docker
+---------------------
+192.168.60.253
+
+sudo yum install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+
+docker container ls
+
+docker container run -d --name app1 busybox:latest ping 8.8.8.8
+docker container run -d --name app2 busybox:latest ping 8.8.8.8
+
+docker ---> command
+container -> context
+run ------> action
+-d -------> detached mode
+--name ---> container name
+busybox:latest --> image 
+ping 8.8.8.8 ----> default command 
+
+
+docker container ls -a
+docker container rm --force app1
+docker container rm --force $(docker container ls -qa)
+docker container stop app1
+docker container stop --time 2 app1
+docker container kill app1
+docker container exec -it app1 sh
+docker container exec -it --env class=devops app1 sh
+docker container exec -it --workdir /root app1 sh
+docker container exec -it --user=amin app1 sh
+
+
+
+docker container exec -it app1 sh

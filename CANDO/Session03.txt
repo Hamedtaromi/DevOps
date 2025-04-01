@@ -1,0 +1,98 @@
+Nginx As a reverse proxy
+Nginx As a load balancer
+DNS 
+ Concept
+ BIND Master Zone
+      Master/Slave Zone
+      caching Only Name Server
+      Forwarder
+      Conditional Forwarder
+      Hardening	
+--------------------------
+
+1. download tomcat using bellog command: 
+	yum -y install wget java-1.8.0-openjdk.x86_64
+	wget https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.78/bin/apache-tomcat-9.0.78.tar.gz ---> /opt/tomcat/
+
+2. download sample war file
+        wget https://tomcat.apache.org/tomcat-7.0-doc/appdev/sample/sample.war  ----> /opt/tomcat/webapp/app.war
+
+3. run tomcat app ---> /opt/tomcat/bin/startup.sh
+
+
+Nginx as a Reverse Proxy
+-------------------------- 
+server {
+        listen 80;
+        server_name devops.aradarpanet.com;
+        return 301 https://devops.aradarpanet.com$request_uri;
+}
+server {
+        listen 443 ssl;
+        server_name devops.aradarpanet.com;
+        ssl_certificate ssl/public.crt;
+        ssl_certificate_key ssl/private.key;
+        location / {
+
+                proxy_pass http://192.168.64.1:8080/app/ ;
+        }
+}
+
+
+
+Nginx as a load balancer
+----------------------
+proxy_cache_path /data/nginx/cache keys_zone=mycache:10m;
+upstream backend {
+
+        server 192.168.64.1:8080;
+        server 192.168.64.2:8080;
+}
+
+server {
+        listen 80;
+        server_name devops.aradarpanet.com;
+        return 301 https://devops.aradarpanet.com$request_uri;
+}
+server {
+        listen 443 ssl;
+        server_name devops.aradarpanet.com;
+        ssl_certificate ssl/public.crt;
+        ssl_certificate_key ssl/private.key;
+        location / {
+                proxy_cache mycache;
+                proxy_pass http://backend/app/ ;
+        }
+}
+
+
+https://docs.nginx.com/nginx/admin-guide/content-cache/content-caching/
+
+https://docs.nginx.com/nginx/admin-guide/load-balancer/http-load-balancer/
+https://nginx.com/blog/nginx-caching-guide
+
+
+        location ~* \.(?:manifest|jpeg|api)$ {
+                expires -1;
+        }
+
+        location ~* \.(?:css|jpeg)$ {
+                expires 1h;
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

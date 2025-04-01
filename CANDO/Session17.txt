@@ -1,0 +1,297 @@
+-block/rescue
+-tag
+import/include
+role
+===========
+
+
+block_sample
+----------------
+- name: block example
+  hosts: prod
+  tasks:
+    - name: CentOS 7 Hardening
+      block:
+        - name: copy CentOS Hardening Script
+          copy:
+           src: files/centosHardening7.sh
+           dest: /root/centosHardening7.sh
+
+        - name: execute hardening script
+          shell: /root/centosHardening7.sh
+
+      when: ansible_distribution == "CentOS"
+
+    - name: block 2
+      block:
+        - name: example task 4
+          debug:
+           msg: example task 4
+
+        - name: example task 5
+          debug:
+           msg: example task 5
+
+        - name: example task 6
+          debug:
+           msg: example task 6
+
+      when: ansible_distribution == "CentOS"
+
+
+
+
+block/rescue/always
+---------------------
+- name: rescue nginx installation
+  hosts: prod
+  tasks:
+   - name: install nginx
+     block:
+      - name: install nginx package
+        yum:
+         name: nginx
+         state: present
+
+      - name: check nginx installation
+        command: nginnnnx -v
+
+     rescue:
+      - name: remove nginx
+        yum:
+         name: nginx
+         state: absent
+
+     always:
+      - name: debug message
+        debug:
+         msg: debug message for nginx
+
+
+
+
+   vars:
+    anonymous_enable: yes
+    local_enable: yes
+    write_enable: yes
+    anon_upload_enable: yes
+
+
+
+
+
+
+
+1. install nginx
+2. take a backup from nginx.conf
+3. replace your config file on nginx service
+4. run nginx -t 
+
+5. restore backup config file
+
+6. start nginx service
+
+
+server {
+   listen 80;
+   server_name  devops.com;
+   location / {
+
+	root /usr/share/nginx/html;
+        index index.html index.htm;
+}
+}
+
+
+
+
+
+rescue sample
+---------------
+- name: install and update nginx
+  hosts: prod
+  vars:
+   nginx_config: /etc/nginx/conf.d/default.conf
+   nginx_backup: /etc/nginx/conf.d/default.bak
+   nginx_content: /usr/share/nginx/html
+   website_name: devops.com
+  tasks:
+   - name: install nginx
+     block:
+      - name: install nginx package
+        yum:
+         name: nginx
+         state: present
+
+      - name: make a backup from nginx config file
+        copy:
+         src: "{{ nginx_config }}"
+         dest: "{{ nginx_backup  }}"
+         remote_src: yes
+
+      - name: replate my config file
+        template:
+         src: files/default.j2
+         dest: "{{ nginx_config }}"
+
+      - name: copy website content
+        copy:
+         src: files/index.html
+         dest: "{{ nginx_content }}"
+
+      - name: check nginx syntax
+        command: nginx -t
+        ignore_errors: yes
+
+
+     rescue:
+      - name: nginx config file rollback
+        copy:
+         src: "{{ nginx_backup  }}"
+         dest: "{{ nginx_config }}"
+         remote_src: yes
+
+
+
+uri module:
+---------------
+      - name: check nginx website
+        uri:
+         url: http://devops.com
+         method: GET
+         follow_redirects: none
+        register: result
+        retries: 100
+        until: result.status == 200
+        delay: 5
+
+
+
+
+
+tag
+---------
+- name: ansible tag example
+  hosts: webservers
+  tasks:
+   - name: install nginx
+     yum:
+      name: nginx
+      state: present
+     tags:
+      - install nginx
+
+   - name: start nginx service
+     systemd:
+      name: nginx
+      state: started
+     tags:
+      - install nginx
+      - start nginx
+      - update nginx
+
+    - name: copy nginx content
+      copy:
+       src: files/index.html
+       dest: /usr/share/nginx/html/
+      tags:
+       - install nginx
+       - start nginx
+       - update nginx
+
+
+ansible-playbook tag_example_01.yaml --tags ...
+ansible-playbook tag_example_01.yaml --skip-tags ...
+
+ 
+import/include
+--------------
+include: 
+--------
+- name: include example
+  hosts: webservers
+  tasks:
+    - name: debug task 1
+      debug:
+       msg: debug task 1
+
+    - include_tasks: tasks.yaml
+
+- name: debug task 2
+  debug:
+   msg: debug task 2
+
+- name: debug task 3
+  debug:
+
+import: 
+--------
+
+
+
+
+
+
+
+project
+	mysql
+		tasks
+			main.yaml
+		vars
+			main.yamls
+		template
+		files
+		handlers
+	nginx
+		tasks
+		vars
+		template
+		files
+		handlers
+	php
+		tasks
+		vars
+		template
+		files
+		handlers
+	monitoring
+	logmanagement
+
+
+
+
+1. install nginx
+2. replace config file --> jinja2
+3. move nginx content ---> jinja2
+4. start nginx
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

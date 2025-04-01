@@ -1,0 +1,101 @@
+docker container
+-                inspect
+-		log
+-		cp
+-		start
+-		stop
+-		top
+container restart_policy
+Anatomy of containers
+Docker Image Concepts
+-----------------------
+
+
+docker container inspect -f "{{ .state.status }}" app1
+
+docker logs:
+-------------
+https://docs.docker.com/config/containers/logging/json-file/
+
+docker container cp webapp:/usr/share/nginx/html/index.html .
+docker container cp index.html webapp:/usr/share/nginx/html/
+docker container top webapp
+docker container stats webapp
+
+https://docs.docker.com/config/containers/start-containers-automatically/
+
+docker container update --restart always webapp
+
+
+
+
+Docker image
+----------------
+
+Image Creation Way: 
+
+	1. Dockerfile
+	2. docker hub (Docker registry)
+	3. from container 
+
+
+
+Dockerfile
+--------------
+FROM python:3.9.18-alpine3.18
+RUN apk update
+RUN mkdir /app
+COPY main.py /app
+WORKDIR /app
+CMD ["python", "main.py"]
+
+
+
+main.py
+---------
+import time
+time.sleep(60)
+print("Docker Class")
+time.sleep(60)
+
+
+
+docker image build . -t myapp:v1.0.0
+
+
+
+Base Image --> alpine
+iputils
+ping 8.8.8.8
+
+
+Base ---> Alpine
+update all packages
+install nginx
+mkdir -p /run/nginx
+copy index.html ----> /usr/share/nginx/html
+copy default.conf --> /etc/nginx/conf.d/
+["nginx", "-g", "daemon off;"]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

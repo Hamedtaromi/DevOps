@@ -1,0 +1,91 @@
+DNS 
+- BIND Master Zone
+      Master/Slave Zone
+      caching Only Name Server
+      Forwarder
+      Conditional Forwarder
+      Hardening
+==============================
+
+ BIND Master Zone:
+
+/etc/named.conf
+
+yum -y install bind bind-utils
+
+
+        listen-on port 53 { 192.168.64.1; };
+	allow-query     { any; };
+        recursion no;
+
+zone "amin.com" {
+  type master;
+  file "/var/named/data/amin.db";
+  
+};
+
+
+ sed -i 's/aghajanian/amin/g' /var/named/data/amin.db
+
+
+
+Master/Slave Zone
+------------------
+zone "amin.com" {
+  type master;
+  file "/var/named/data/amin.db";
+  allow-update { none; };
+  allow-transfer { 192.168.64.2; };
+};
+
+zone "amin.com" {
+        type slave;
+        file "/var/named/data/amin.db";
+        masters { 192.168.64.1; };
+        allow-transfer { none; };
+};
+
+
+dig AXFR digikala.ir. @185.188.105.11
+
+
+
+master
+slave
+hints
+
+
+forward zone
+---------------
+zone "ahmad.com" {
+        type master;
+        file "/var/named/data/ahmad.db";
+};
+
+
+zone "amin.com" {
+        type forward;
+        forwarders { 192.168.64.1; };
+};
+
+
+
+DNS Hardening
+-----------------
+1.Update Bind version
+2. mask bind version ---------> version "null";
+3. Split DNS Server ??????
+4. run bind as a non-root user
+5. control zone transfer
+6. Jail Bind ??????
+
+
+
+https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/9/html/managing_networking_infrastructure_services/assembly_setting-up-and-configuring-a-bind-dns-server_networking-infrastructure-services#assembly_configuring-zones-on-a-bind-dns-server_assembly_setting-up-and-configuring-a-bind-dns-server
+
+
+
+
+
+
+

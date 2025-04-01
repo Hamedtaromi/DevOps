@@ -1,0 +1,8 @@
+
+
+
+1. Infrastructure
+2. CICD pipeline
+3. Versioning
+237598803
+1034347299
